@@ -33,10 +33,9 @@ func mandelbrot(a complex128) float64 {
 func main() {
 	scale := width / (rMax - rMin)
 	height := int(scale * (iMax - iMin))
-	bounds := image.Rectangle{
-		Min: image.Pt(0, 0),
-		Max: image.Pt(width, height),
-	}
+	min := image.Pt(0, 0)
+	max := image.Pt(width, height)
+	bounds := image.Rectangle{min, max}
 	b := image.NewNRGBA(bounds)
 	black := color.Gray16{0}
 	draw.Draw(b, bounds, image.NewUniform(black), image.ZP, draw.Src)

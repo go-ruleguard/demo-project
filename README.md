@@ -27,29 +27,25 @@ Run rules over the demo project:
 
 ```bash
 $ ruleguard -c 0 -rules rules/rules.go ./mandelbrot
-mandelbrot/main.go:36:12: imageRect: could use image.Rect() helper function (rules.go:44)
-36		bounds := image.Rectangle{
-mandelbrot/main.go:37:8: imagePt: zero point should be written as image.Point{} (rules.go:30)
-37			Min: image.Pt(0, 0),
-mandelbrot/main.go:41:11: imageColors: suggestion: color.Black (rules.go:8)
-41		black := color.Gray16{0}
-mandelbrot/main.go:42:48: imageZP: image.ZP is deprecated, use image.Point{} instead (rules.go:24)
+mandelbrot/main.go:36:9: imagePt: zero point should be written as image.Point{} (rules.go:30)
+36		min := image.Pt(0, 0)
+mandelbrot/main.go:40:11: imageColors: suggestion: color.Black (rules.go:8)
+40		black := color.Gray16{0}
+mandelbrot/main.go:41:48: imageZP: image.ZP is deprecated, use image.Point{} instead (rules.go:24)
+41		draw.Draw(b, bounds, image.NewUniform(black), image.ZP, draw.Src)
 ```
 
 Run rules with [golangci-lint](https://github.com/golangci/golangci-lint):
 
 ```bash
 $ golangci-lint run ./mandelbrot
-mandelbrot/main.go:36:12: ruleguard: could use image.Rect() helper function (gocritic)
-	bounds := image.Rectangle{
-	          ^
-mandelbrot/main.go:37:8: ruleguard: zero point should be written as image.Point{} (gocritic)
-		Min: image.Pt(0, 0),
-		     ^
-mandelbrot/main.go:41:11: ruleguard: suggestion: color.Black (gocritic)
+mandelbrot/main.go:36:9: ruleguard: zero point should be written as image.Point{} (gocritic)
+	min := image.Pt(0, 0)
+	       ^
+mandelbrot/main.go:40:11: ruleguard: suggestion: color.Black (gocritic)
 	black := color.Gray16{0}
 	         ^
-mandelbrot/main.go:42:48: ruleguard: image.ZP is deprecated, use image.Point{} instead (gocritic)
+mandelbrot/main.go:41:48: ruleguard: image.ZP is deprecated, use image.Point{} instead (gocritic)
 	draw.Draw(b, bounds, image.NewUniform(black), image.ZP, draw.Src)
 	                                              ^
 ```
@@ -60,10 +56,9 @@ Run rules with [gocritic](https://github.com/go-critic/go-critic):
 
 ```bash
 $ gocritic check -enable ruleguard -@ruleguard.rules rules/rules.go ./mandelbrot
-./mandelbrot/main.go:36:12: ruleguard: could use image.Rect() helper function
-./mandelbrot/main.go:42:48: ruleguard: image.ZP is deprecated, use image.Point{} instead
-./mandelbrot/main.go:41:11: ruleguard: suggestion: color.Black
-./mandelbrot/main.go:37:8: ruleguard: zero point should be written as image.Point{}
+./mandelbrot/main.go:41:48: ruleguard: image.ZP is deprecated, use image.Point{} instead
+./mandelbrot/main.go:40:11: ruleguard: suggestion: color.Black
+./mandelbrot/main.go:36:9: ruleguard: zero point should be written as image.Point{}
 ```
 
 ## Running the mandelbrot
