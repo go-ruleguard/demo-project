@@ -36,7 +36,7 @@ mandelbrot/main.go:41:11: imageColors: suggestion: color.Black (rules.go:8)
 mandelbrot/main.go:42:48: imageZP: image.ZP is deprecated, use image.Point{} instead (rules.go:24)
 ```
 
-Run rules with `golangci-lint`:
+Run rules with [golangci-lint](https://github.com/golangci/golangci-lint):
 
 ```bash
 $ golangci-lint run ./mandelbrot
@@ -56,7 +56,7 @@ mandelbrot/main.go:42:48: ruleguard: image.ZP is deprecated, use image.Point{} i
 
 See [.golangci.yml](.golangci.yml) config to see how to enable `ruleguard` for your golangci-lint.
 
-Run rules with `gocritic`:
+Run rules with [gocritic](https://github.com/go-critic/go-critic):
 
 ```bash
 $ gocritic check -enable ruleguard -@ruleguard.rules rules/rules.go ./mandelbrot
@@ -75,3 +75,5 @@ go run ./mandelbrot
 ```
 
 Enjoy the `mandelbrot.png`.
+
+<img src="https://user-images.githubusercontent.com/6286655/114301199-7b71e600-9acc-11eb-9815-114bab1dd99e.png" width="25%" height="25%">
