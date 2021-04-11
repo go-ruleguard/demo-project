@@ -61,6 +61,37 @@ $ gocritic check -enable ruleguard -@ruleguard.rules rules/rules.go ./mandelbrot
 ./mandelbrot/main.go:36:9: ruleguard: zero point should be written as image.Point{}
 ```
 
+## Auto-fixing the code
+
+Just run ruleguard with `-fix` flag.
+
+```bash
+$ ruleguard -fix -rules rules/rules.go ./mandelbrot
+mandelbrot/main.go:36:9: imagePt: zero point should be written as image.Point{} (rules.go:30)
+mandelbrot/main.go:40:11: imageColors: suggestion: color.Black (rules.go:8)
+mandelbrot/main.go:41:48: imageZP: image.ZP is deprecated, use image.Point{} instead (rules.go:24)
+```
+
+Diff:
+
+```diff
+ func main() {
+        scale := width / (rMax - rMin)
+        height := int(scale * (iMax - iMin))
+-       min := image.Pt(0, 0)
++       min := image.Point{}
+        max := image.Pt(width, height)
+        bounds := image.Rectangle{min, max}
+        b := image.NewNRGBA(bounds)
+-       black := color.Gray16{0}
+-       draw.Draw(b, bounds, image.NewUniform(black), image.ZP, draw.Src)
++       black := color.Black
++       draw.Draw(b, bounds, image.NewUniform(black), image.Point{}, draw.Src)
+        for x := 0; x < width; x++ {
+                for y := 0; y < height; y++ {
+                        fEsc := mandelbrot(complex(
+```
+
 ## Running the mandelbrot
 
 ```bash
